@@ -47,6 +47,8 @@ Const
   Hint2 = 'Буквы и цифры';
 
 var  Glif : array [1..4] of TImage;
+     FirstCheck,CheckNumb : boolean;
+
 
 procedure Register;
 function CheckControlNumb(STrForCheck:string):integer;
@@ -138,10 +140,12 @@ begin
     FImage.Height :=28;
     FImage.Width  :=28;
     FImage.Picture.Bitmap := Glif[1].Picture.Bitmap;
-    FImage.Center:= True;
-    FImage.Align:= alClient;
-    FImage.OnClick:= ImageClick;
+    FImage.Center         := True;
+    FImage.Align          := alClient;
+    FImage.OnClick        := ImageClick;
 
+    FirstCheck            :=False;
+    CheckNumb             :=False;
 
 end;
 
@@ -157,17 +161,25 @@ end;
 procedure TImagecr.CMMouseEnter(var Message: TMessage);
 begin
   Picture.Bitmap := Glif[2].Picture.Bitmap;
-  Repaint;
+
 end;
 
 procedure TImagecr.CMMouseLeave(var Message: TMessage);
 begin
-  Picture.Bitmap := Glif[1].Picture.Bitmap;
+  if FirstCheck then
+   if CheckNumb then
+    Picture.Bitmap := Glif[3].Picture.Bitmap       // Number is Ok
+    else Picture.Bitmap := Glif[4].Picture.Bitmap  // Wrong Number
+  else
+  Picture.Bitmap := Glif[1].Picture.Bitmap;        // Empty
 end;
 
 procedure TContainerNumb.ImageClick ;
 begin
-  FMaskEdit.Text:='';
+  FMaskEdit.Text        := '';
+  FirstCheck            := False;
+  CheckNumb             := False;
+
 
 end;
 
@@ -197,8 +209,17 @@ begin
   0:  begin
         if Pos(' ',FMaskEdit.Text)=0 then
          if CheckControlNumb(FMaskEdit.Text)=1 then
-           FImage.Picture.Bitmap := Glif[3].Picture.Bitmap
-         else FImage.Picture.Bitmap := Glif[4].Picture.Bitmap;
+         begin
+           FImage.Picture.Bitmap := Glif[3].Picture.Bitmap;     // Number is Ok
+           CheckNumb:=True;
+           FirstCheck:=True;
+         end
+         else
+         begin
+           FImage.Picture.Bitmap := Glif[4].Picture.Bitmap;    // Wrong number
+           CheckNumb:=False;
+           FirstCheck:=True;
+         end;
 
       end;
 
@@ -213,26 +234,38 @@ procedure TContainerNumb.PanelClick(Sender:TObject);
 begin
   if FMaskEdit.EditMask = FullMask
   then begin
-         FLeftSideNumber:= FMaskEdit.Text;
-         FMaskEdit.Text:='';
-         FMaskEdit.EditMask:= ShortMask;
-         FMaskEdit.Text:=Copy(FLeftSideNumber,5,7);
-         FPanel.Hint:=Hint2;
-         FMaskEdit.Left:=67;
-         MEFormat:=1;
-         FImage.Picture.Bitmap := Glif[1].Picture.Bitmap;
+         FLeftSideNumber        := FMaskEdit.Text;
+         FMaskEdit.Text         := '';
+         FMaskEdit.EditMask     := ShortMask;
+         FMaskEdit.Text         := Copy(FLeftSideNumber,5,7);
+         FPanel.Hint            := Hint2;
+         FMaskEdit.Left         := 67;
+         MEFormat               := 1;
+         FImage.Picture.Bitmap  := Glif[1].Picture.Bitmap;       // Empty
+         FirstCheck             := False;
        end
 
   else  begin
-         FMaskEdit.EditMask:= FullMask;
-         FMaskEdit.Text:=FLeftSideNumber;
-         FPanel.Hint:=Hint1;
-         FMaskEdit.Left:=42;
-         MEFormat:=0;
-         if Pos(' ',FMaskEdit.Text)=0 then
-         if CheckControlNumb(FMaskEdit.Text)=1 then
-           FImage.Picture.Bitmap := Glif[3].Picture.Bitmap// LoadBitmap(hInstance, 'okbmp')
-         else FImage.Picture.Bitmap := Glif[4].Picture.Bitmap;//LoadBitmap(hInstance, 'wrongbmp');
+         FMaskEdit.EditMask       := FullMask;
+         FMaskEdit.Text           := FLeftSideNumber;
+         FPanel.Hint              := Hint1;
+         FMaskEdit.Left           := 42;
+         MEFormat                 := 0;
+         if Pos(' ',FMaskEdit.Text)= 0 then
+          if CheckControlNumb(FMaskEdit.Text)= 1 then
+          begin
+            FImage.Picture.Bitmap := Glif[3].Picture.Bitmap;     // Number is Ok
+            CheckNumb             := True;
+            FirstCheck            := True;
+          end
+          else
+          begin
+            FImage.Picture.Bitmap := Glif[4].Picture.Bitmap;    // Wrong number
+            CheckNumb             := False;
+            FirstCheck            := True;
+          end;
+
+
        end
 
 
