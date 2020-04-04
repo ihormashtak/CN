@@ -115,6 +115,7 @@ begin
     FMaskEdit.MaxLength := 12;
     FMaskEdit.OnKeyPress := MaskEditKeyPress;
     FMaskEdit.OnKeyUp := MaskEditKeyUp;
+    FmaskEdit.Hint := Hint3;
 
     FPanel2:=TPanel.Create(Self);
     FPanel2.Parent:=Self;
