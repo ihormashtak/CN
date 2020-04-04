@@ -45,6 +45,8 @@ Const
   ShortMask = '0000000;1;_';
   Hint1 = 'Только цифры';
   Hint2 = 'Буквы и цифры';
+  Hint3 = 'Полный фомат: ABCD1234567';
+  Hint4 = 'Сокращенный фомат: 1234567';
 
 var  Glif : array [1..4] of TImage;
      FirstCheck,CheckNumb : boolean;
@@ -240,6 +242,7 @@ begin
          FMaskEdit.EditMask     := ShortMask;
          FMaskEdit.Text         := Copy(FLeftSideNumber,5,7);
          FPanel.Hint            := Hint2;
+         FmaskEdit.Hint         := Hint4;
          FMaskEdit.Left         := 67;
          MEFormat               := 1;
          FImage.Picture.Bitmap  := Glif[1].Picture.Bitmap;       // Empty
@@ -250,6 +253,7 @@ begin
          FMaskEdit.EditMask       := FullMask;
          FMaskEdit.Text           := FLeftSideNumber;
          FPanel.Hint              := Hint1;
+         FmaskEdit.Hint           := Hint3;
          FMaskEdit.Left           := 42;
          MEFormat                 := 0;
          if Pos(' ',FMaskEdit.Text)= 0 then
