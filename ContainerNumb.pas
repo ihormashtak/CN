@@ -45,6 +45,8 @@ Const
   ShortMask = '0000000;1;_';
   Hint1 = 'Только цифры';
   Hint2 = 'Буквы и цифры';
+  Hint3 = 'Сокращенный формат';
+  Hint4 = 'Полный формат';
 
 var  Glif : array [1..4] of TImage;
      FirstCheck,CheckNumb : boolean;
