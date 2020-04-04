@@ -73,6 +73,8 @@ begin
     BorderWidth := 1;
     BevelWidth := 1;
     BevelInner := bvLowered;
+    ParentColor:=False;
+    ParentBackground:=False;
     Color := clBtnHighlight;
     MEFormat:=0;
 
@@ -85,6 +87,8 @@ begin
     FPanel.Caption:='123';
     FPanel.BevelInner := bvLowered;
     FPanel.Align:= alNone;
+    FPanel.ParentBackground:=False;
+    FPanel.ParentColor:=False;
     FPanel.Color := cl3DLight;
     FPanel.TabOrder:= 0;
     FPanel.OnClick:= PanelClick;
@@ -125,6 +129,7 @@ begin
     FPanel2.Width:=32;
     FPanel2.BevelInner := bvLowered;
     FPanel2.Align:= alNone;
+    FPanel2.ParentColor:=False;
     FPanel2.Color := cl3DLight;
 
     Glif[1]:=TImage.Create(Self);
